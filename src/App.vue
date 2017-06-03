@@ -1,5 +1,5 @@
 <template>
-  <div id="app" dir= 'rtl'>
+  <div id="app">
   <header>
     <span>{{ title }}</span>
   </header>
@@ -19,7 +19,10 @@ export default {
 </script>
 
 <style>
-h1, h2, span{
+#app{
+    direction: rtl;
+}
+span{
     color: goldenrod;
 }
 body{

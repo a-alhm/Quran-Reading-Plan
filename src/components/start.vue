@@ -19,6 +19,7 @@ export default {
 <style scoped>
     h1, span{
         text-align: center;
+        color: goldenrod;
     }
     h1{
         font-size: 6em;
@@ -39,14 +40,11 @@ export default {
         color: white;
         font-size: 1.2em;
         font-family: 'Amiri', serif;
-        cursor: pointer;
         outline: none;
         width: 48px;
         text-decoration: none;
-
     }
-
-        .btn:hover {
-            background-color: rgb(197, 149, 30);
+    .btn:hover {
+        background-color: rgb(197, 149, 30);
         }
 </style>
