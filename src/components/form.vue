@@ -4,11 +4,11 @@
         <input type='number' min='1' max='365'>
         <label>يومًا </label>
         <hr> اختر الايام التي ترغب القراءة فيها:
-        <checkboxes item="جميع الأيام" @valueChanged='allCheckedDays'></checkboxes>
-        <checkboxes v-for='item in days' :item='item.day' :selected='item.selected' :key='item.day' @valueChanged='checkedDay'></checkboxes>
+        <checkboxes item="جميع الأيام" index='0' @valueChanged='allCheckedDays'></checkboxes>
+        <checkboxes v-for='(item, index) in days' :item='item.day' :selected='item.selected' :index='index' @valueChanged='checkedDay'></checkboxes>
         <hr> اختر الاوقات التي ترغب القراءة فيها:
-        <checkboxes item="جميع الأوقات" @valueChanged='allCheckedPeriods'></checkboxes>
-        <checkboxes v-for='item in periods' :item='item.period' :selected='item.selected' :key='item.period' @valueChanged='checkedPeriod'></checkboxes>
+        <checkboxes item="جميع الأوقات" index='0' @valueChanged='allCheckedPeriods'></checkboxes>
+        <checkboxes v-for='(item, index) in periods' :item='item.period' :selected='item.selected' :index='index' @valueChanged='checkedPeriod'></checkboxes>
         <button @click='save'>حفظ</button>
     </div>
 </template>
@@ -63,23 +63,21 @@ export default {
     },
     methods: {
         checkedDay(data) {
-            const index = this.days.findIndex(ele => ele.day === data.item);
-            this.days[index].selected = data.checked;
+            this.days[data.index].selected = data.checked;
         },
         allCheckedDays() {
             this.isAllDaysSelected = !this.isAllDaysSelected;
-            this.days.forEach(item => {
-                this.checkedDay({ item: item.day, checked: this.isAllDaysSelected })
+            this.days.forEach((item, index) => {
+                this.checkedDay({ item: item.day, checked: this.isAllDaysSelected, index })
             });
         },
         checkedPeriod(data) {
-            const index = this.periods.findIndex(ele => ele.period === data.item);
-            this.periods[index].selected = data.checked;
+            this.periods[data.index].selected = data.checked;
         },
         allCheckedPeriods() {
             this.isAllPeriodsSelected = !this.isAllPeriodsSelected;
-            this.periods.forEach(item => {
-                this.checkedPeriod({ item: item.period, checked: this.isAllPeriodsSelected })
+            this.periods.forEach((item, index) => {
+                this.checkedPeriod({ item: item.period, checked: this.isAllPeriodsSelected, index })
             });
         },
         save() {
@@ -91,7 +89,7 @@ export default {
             if (userPeroidsSelection.length === 0) {
                 alert("الرجاء اختيار وقت واحد على الأقل!")
             }
-            localStorage.plan = JSON.stringify({userDaysSelection,userPeroidsSelection})
+            localStorage.plan = JSON.stringify({ userDaysSelection, userPeroidsSelection })
 
         }
 

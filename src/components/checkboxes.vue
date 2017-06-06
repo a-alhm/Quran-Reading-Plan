@@ -8,10 +8,10 @@
 <script>
     export default {
         name: 'checkboxes',
-        props:['item', 'selected'],
+        props:['item', 'selected','index'],
         methods:{
             changeValue(e){
-                this.$emit('valueChanged', {item:this.item, checked: !this.selected})
+                this.$emit('valueChanged', {item:this.item, checked: !this.selected, index:this.index})
             }   
         }
     }
