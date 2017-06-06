@@ -1,6 +1,6 @@
 <template>
     <div class='pad'>     
-        <input :id='item' type="checkbox" hidden @change='changeValue'>
+        <input :id='item' type="checkbox" :checked='selected' hidden @change='changeValue'>
         <label class='cbx' :for="item"></label>
         <label class='lbl'>{{ item }}</label>
     </div>
@@ -8,11 +8,10 @@
 <script>
     export default {
         name: 'checkboxes',
-        props:['item'],
+        props:['item', 'selected','index'],
         methods:{
-            changeValue(){
-                console.log(this.item)
-                this.$emit('valueChanged', this.item)
+            changeValue(e){
+                this.$emit('valueChanged', {item:this.item, checked: !this.selected, index:this.index})
             }   
         }
     }
