@@ -1,23 +1,29 @@
 <template>
     <div class='co'>
         حدد المده:
-        <input type='number' min='1' max='365'>
+        <input type='number' min='1' max='365' v-model='duration'>
         <label>يومًا </label>
         <hr> اختر الايام التي ترغب القراءة فيها:
-        <checkboxes item="جميع الأيام" index='0' @valueChanged='allCheckedDays'></checkboxes>
+        <checkboxes item="جميع الأيام" index='0' @valueChanged='allCheckedDays' :selected='isAllDaysSelected' class='all'></checkboxes>
         <checkboxes v-for='(item, index) in days' :item='item.day' :selected='item.selected' :index='index' @valueChanged='checkedDay'></checkboxes>
         <hr> اختر الاوقات التي ترغب القراءة فيها:
-        <checkboxes item="جميع الأوقات" index='0' @valueChanged='allCheckedPeriods'></checkboxes>
+        <checkboxes item="جميع الأوقات" index='0' @valueChanged='allCheckedPeriods' :selected='isAllPeriodsSelected' class='all'></checkboxes>
         <checkboxes v-for='(item, index) in periods' :item='item.period' :selected='item.selected' :index='index' @valueChanged='checkedPeriod'></checkboxes>
-        <button @click='save'>حفظ</button>
+        <button @click='save' class='btn'>حفظ</button>
     </div>
 </template>
 
 <script>
 export default {
+    beforeCreate() {
+        if (localStorage.plan) {
+            this.$router.push('/dashboard')
+        }
+    },
     name: 'form',
     data() {
         return {
+            duration: 0,
             isAllDaysSelected: false,
             days: [{
                 day: 'السبت',
@@ -64,32 +70,44 @@ export default {
     methods: {
         checkedDay(data) {
             this.days[data.index].selected = data.checked;
+            this.isAllDaysSelected = this.days.every(ele => ele.selected === true)
         },
         allCheckedDays() {
-            this.isAllDaysSelected = !this.isAllDaysSelected;
-            this.days.forEach((item, index) => {
-                this.checkedDay({ item: item.day, checked: this.isAllDaysSelected, index })
-            });
+            this.isAllDaysSelected = !this.isAllDaysSelected
+            this.isAllDaysSelected ?
+                this.days.forEach((item, index) => {
+                    this.checkedDay({ item: item.day, checked: true, index })
+                }) : this.isAllDaysSelected = false
         },
         checkedPeriod(data) {
             this.periods[data.index].selected = data.checked;
+            this.isAllPeriodsSelected = this.periods.every(ele => ele.selected === true)
         },
         allCheckedPeriods() {
             this.isAllPeriodsSelected = !this.isAllPeriodsSelected;
-            this.periods.forEach((item, index) => {
-                this.checkedPeriod({ item: item.period, checked: this.isAllPeriodsSelected, index })
-            });
+            this.isAllPeriodsSelected ?
+                this.periods.forEach((item, index) => {
+                    this.checkedPeriod({ item: item.period, checked: true, index })
+                }) : this.isAllPeriodsSelected = false
         },
         save() {
             const userDaysSelection = this.days.filter(ele => ele.selected).map(ele => ele.day)
             const userPeroidsSelection = this.periods.filter(ele => ele.selected).map(ele => ele.period);
+            const userDuration = this.duration
             if (userDaysSelection.length === 0) {
                 alert("الرجاء اختيار يوم واحد على الأقل!")
+                return
             }
             if (userPeroidsSelection.length === 0) {
                 alert("الرجاء اختيار وقت واحد على الأقل!")
+                return
             }
-            localStorage.plan = JSON.stringify({ userDaysSelection, userPeroidsSelection })
+            if (Number(this.duration) > 365 || Number(this.duration) < 1) {
+                alert('الرجاء اختيار مده تتراوح بين يوم واحد الى 365 يوم')
+                return
+            }
+            localStorage.plan = JSON.stringify({ userDaysSelection, userPeroidsSelection, userDuration })
+            this.$router.push('/dashboard')
 
         }
 
@@ -123,5 +141,13 @@ input[type="number"] {
     outline: 0;
     padding: 5px;
     font-size: 17px;
+}
+
+.btn {
+    width: initial
+}
+
+.all {
+    color: #34d834
 }
 </style>

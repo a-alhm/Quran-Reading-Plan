@@ -7,13 +7,17 @@ Vue.use(Router)
 
 const routes = [
   {
+    path: '*'
+  },
+  {
+    path: '/dashboard'
+  },
+  {
     path: '/',
-    name: 'Start',
     component: start
   },
   {
     path: '/form',
-    name: 'form',
     component: form
   }
 ]
