@@ -1,8 +1,8 @@
 <template>
     <div class='co'>
         حدد المده:
-        <input type='number' min='1' max='365' v-model='duration'>
-        <label>يومًا </label>
+        <input type='number' min='1' max='20' v-model='duration'>
+        <label>اسبوع </label>
         <hr> اختر الايام التي ترغب القراءة فيها:
         <checkboxes item="جميع الأيام" index='0' @valueChanged='allCheckedDays' :selected='isAllDaysSelected' class='all'></checkboxes>
         <checkboxes v-for='(item, index) in days' :item='item.day' :selected='item.selected' :index='index' @valueChanged='checkedDay'></checkboxes>
@@ -20,7 +20,6 @@ export default {
             this.$router.push('/dashboard')
         }
     },
-    name: 'form',
     data() {
         return {
             duration: 0,
@@ -70,7 +69,7 @@ export default {
     methods: {
         checkedDay(data) {
             this.days[data.index].selected = data.checked;
-            this.isAllDaysSelected = this.days.every(ele => ele.selected === true)
+            this.isAllDaysSelected = this.days.every(ele => ele.selected)
         },
         allCheckedDays() {
             this.isAllDaysSelected = !this.isAllDaysSelected
@@ -81,7 +80,7 @@ export default {
         },
         checkedPeriod(data) {
             this.periods[data.index].selected = data.checked;
-            this.isAllPeriodsSelected = this.periods.every(ele => ele.selected === true)
+            this.isAllPeriodsSelected = this.periods.every(ele => ele.selected)
         },
         allCheckedPeriods() {
             this.isAllPeriodsSelected = !this.isAllPeriodsSelected;
@@ -102,8 +101,8 @@ export default {
                 alert("الرجاء اختيار وقت واحد على الأقل!")
                 return
             }
-            if (Number(this.duration) > 365 || Number(this.duration) < 1) {
-                alert('الرجاء اختيار مده تتراوح بين يوم واحد الى 365 يوم')
+            if (Number(this.duration) > 20 || Number(this.duration) < 1) {
+                alert('الرجاء اختيار مده تتراوح بين اسبوع واحد الى 20 اسبوع')
                 return
             }
             localStorage.plan = JSON.stringify({ userDaysSelection, userPeroidsSelection, userDuration })
@@ -124,7 +123,7 @@ div {
 .co {
     width: 265px;
     margin: 50px auto;
-    background-color: blanchedalmond;
+    background-color: #f3e8d6;
     ;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
     padding: 10px;

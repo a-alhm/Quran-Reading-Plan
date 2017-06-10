@@ -12,7 +12,6 @@ export default {
             this.$router.push('/dashboard')
         }
     },
-    name: 'start',
     props: ['appTitle'],
     data() {
         return {

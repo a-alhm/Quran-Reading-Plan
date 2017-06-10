@@ -3,13 +3,12 @@
     <header>
       <span>{{ title }}</span>
     </header>
-    <router-view :appTitle='title'></router-view>
+    <router-view :appTitle='title' id='pad'></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app',
   data() {
     return {
       title: 'ختمة'
@@ -19,6 +18,10 @@ export default {
 </script>
 
 <style>
+#pad {
+  padding: 10px
+}
+
 #app {
   direction: rtl;
 }

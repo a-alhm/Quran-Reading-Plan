@@ -7,7 +7,6 @@
 </template>
 <script>
 export default {
-    name: 'checkboxes',
     props: ['item', 'selected', 'index'],
     methods: {
         changeValue(e) {
