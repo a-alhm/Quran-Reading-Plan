@@ -2,6 +2,7 @@
   <div>
     <div class="con">
       <schedule v-if='isItToDay' :plan='plan' />
+      <h1 v-else>ليس لديك قراءة اليوم</h1>
     </div>
   </div>
 </template>
@@ -48,6 +49,10 @@ div {
   ;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   padding: 10px;
+}
+h1{
+    color: goldenrod;
+    text-align: center
 }
 
 @media screen and (min-width: 500px) {
