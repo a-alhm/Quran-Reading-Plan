@@ -23,7 +23,7 @@ export default {
 }
 
 input[type='checkbox']:checked~.cbx {
-    background: goldenrod;
+    background: currentColor;
 }
 
 input[type='checkbox']~.cbx {

@@ -1,30 +1,52 @@
 <template>
-  <div>
+  <div class='main'>
+      <button @click='right' class='right btn'>&lt;</button>
+      <button @click='left' class='left btn'>&gt;</button>
     <div class="con">
-      <schedule v-if='isItToDay' :plan='plan' />
-      <h1 v-else>ليس لديك قراءة اليوم</h1>
+      <dayPlane :plan='plan[0][0]'></dayPlane>
+    </div>
+    <div class="con">
+      هل انتهيت من قراءة هذا اليوم؟
+      <checkboxes item='نعم' :selected='plan[0][0].done' @valueChanged='checkedDay'></checkboxes>
     </div>
   </div>
 </template>
-
+ 
 <script>
 export default {
   data() {
     return {
-      days: ['الاحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعه', 'السبت'],
-      plan: JSON.parse(localStorage.plan),
+      plan: JSON.parse(localStorage.plan)
     }
   },
-  computed: {
-    isItToDay() {
-      const today = new Date().getDay()
-      return this.plan.userDaysSelection.some(ele => ele === this.days[today])
+  methods: {
+    right() {
+      if (this.plan[1].length >= 1)
+        this.plan[0].unshift(this.plan[1][this.plan[1].length - 1])
+      this.plan[1].pop()
+    },
+    left() {
+      if (this.plan[0].length > 1) {
+        this.plan[1].push(this.plan[0][0])
+        this.plan[0].shift()
+      }
+    },
+    checkedDay(data) {
+      this.plan[0][0].done = data.checked;
+       localStorage.plan = JSON.stringify(this.plan)
     }
   }
 }
 </script>
 
 <style>
+.main{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 600px;
+  position: relative;
+  margin: 30px auto
+}
 .red,
 .green {
   color: white
@@ -38,26 +60,41 @@ export default {
   background-color: green
 }
 
-div {
-  color: black;
+.left {
+  left: 1px;
+}
+
+.right {
+  right: 1px;
 }
 
 .con {
   width: initial;
-  margin: 50px auto;
+  margin: 10px auto;
   background-color: #f3e8d6;
-  ;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   padding: 10px;
-}
-h1{
-    color: goldenrod;
-    text-align: center
+  text-align: center;
 }
 
+h1 {
+  color: goldenrod;
+  text-align: center
+}
+
+.right,
+.left {
+  position: absolute;
+}
+
+.hide {
+  display: none
+}
+/*
 @media screen and (min-width: 500px) {
   .con {
     width: 400px
   }
 }
+*/
 </style>
