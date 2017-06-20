@@ -1,52 +1,60 @@
 <template>
   <div class='main'>
-      <button @click='right' class='right btn'>&lt;</button>
-      <button @click='left' class='left btn'>&gt;</button>
+    <button @click='moveRight' class='right btn'>&lt;</button>
+    <button @click='moveLeft' class='left btn'>&gt;</button>
     <div class="con">
-      <dayPlane :plan='plan[0][0]'></dayPlane>
+      <dayPlane :plan='right[0]'></dayPlane>
     </div>
     <div class="con">
       هل انتهيت من قراءة هذا اليوم؟
-      <checkboxes item='نعم' :selected='plan[0][0].done' @valueChanged='checkedDay'></checkboxes>
+      <checkboxes item='نعم' :selected='right[0].done' @valueChanged='checkedDay'></checkboxes>
     </div>
   </div>
 </template>
  
 <script>
 export default {
+  created() {
+    //day = 86400000 Milliseconds
+    let today = Math.floor((new Date().getTime()) * 1.15740740741E-8);
+        while(this.right[0].dayInMilliseconds < today){
+            this.moveLeft()
+        }
+  },
   data() {
     return {
-      plan: JSON.parse(localStorage.plan)
+      right: JSON.parse(localStorage.plan),
+      left: []
     }
   },
   methods: {
-    right() {
-      if (this.plan[1].length >= 1)
-        this.plan[0].unshift(this.plan[1][this.plan[1].length - 1])
-      this.plan[1].pop()
+    moveRight() {
+      if (this.left.length >= 1)
+        this.right.unshift(this.left[this.left.length - 1])
+      this.left.pop()
     },
-    left() {
-      if (this.plan[0].length > 1) {
-        this.plan[1].push(this.plan[0][0])
-        this.plan[0].shift()
+    moveLeft() {
+      if (this.right.length > 1) {
+        this.left.push(this.right[0])
+        this.right.shift()
       }
     },
     checkedDay(data) {
-      this.plan[0][0].done = data.checked;
-       localStorage.plan = JSON.stringify(this.plan)
+      this.right[0].done = data.checked;
     }
   }
 }
 </script>
 
 <style>
-.main{
+.main {
   display: flex;
   flex-wrap: wrap;
   max-width: 600px;
   position: relative;
   margin: 30px auto
 }
+
 .red,
 .green {
   color: white
@@ -90,6 +98,8 @@ h1 {
 .hide {
   display: none
 }
+
+
 /*
 @media screen and (min-width: 500px) {
   .con {

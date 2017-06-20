@@ -224,20 +224,21 @@ export default {
                 return
             }
 
-            let plan = [[],[]],
+            let plan = [],
                 totalDays = userDuration * userDaysSelection.length,
-                dailyQuantityOfAyat = 6236 / totalDays;
-
+                dailyQuantityOfAyat = 6236 / totalDays,
+                date = new Date();
             for (let i = 0; i < totalDays; i++) {
                 let obj = {
-                    day: userDaysSelection[i % userDaysSelection.length],
+                    day: userDaysSelection[(date.getDay() + i + 1) % userDaysSelection.length],
                     week: Math.floor(i / userDaysSelection.length) + 1,
                     from: Math.floor(dailyQuantityOfAyat * i),
                     to: Math.floor(dailyQuantityOfAyat * (i + 1)),
                     surah: '',
+                    dayInMilliseconds: Math.floor(date.getTime() * 1.15740740741E-8) + i,
                     done: false
                 }
-                plan[0].push(obj)
+                plan.push(obj)
             }
             localStorage.plan = JSON.stringify(plan)
             localStorage.periods = JSON.stringify(userPeroidsSelection)
