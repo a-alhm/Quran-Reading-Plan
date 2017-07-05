@@ -3,9 +3,9 @@
     <header>
       <span>{{ title }}</span>
     </header>
-    <transition name="component-fade" mode="out-in" appear>    
+    <transition name="component-fade" mode="out-in" appear>
       <router-view :appTitle='title' id='pad'></router-view>
-    </transition>  
+    </transition>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
 
 <style>
 #pad {
-  padding: 10px
+  padding-top: 10px
 }
 
 #app {
@@ -33,11 +33,11 @@ body {
   margin: 0;
   font-family: 'Amiri', serif;
   background-color: floralwhite;
-   color: goldenrod;
+  color: goldenrod;
 }
 
 header {
-  padding: 10px;
+  padding-right: 5px;
   box-shadow: 0 3px 0 gold, 0 8px 10px rgba(0, 0, 0, 0.15);
   background-color: #f3e8d6;
 }
@@ -66,10 +66,13 @@ header span {
   background-color: rgb(197, 149, 30);
 }
 
-.component-fade-enter-active, .component-fade-leave-active {
+.component-fade-enter-active,
+.component-fade-leave-active {
   transition: opacity .3s ease;
 }
-.component-fade-enter, .component-fade-leave-to {
+
+.component-fade-enter,
+.component-fade-leave-to {
   opacity: 0;
 }
 </style>

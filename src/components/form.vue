@@ -1,10 +1,13 @@
 <template>
+ <div>
     <div class='co'>
         حدد المده:
         <input type='number' min='1' max='20' v-model='duration'>
         <label>اسبوع </label>
-    
-        <hr> اختر الايام التي ترغب القراءة فيها:
+    </div>
+
+    <div class='co'>
+        اختر الايام التي ترغب القراءة فيها:
         <checkboxes 
         item="جميع الأيام" 
         index='0'
@@ -12,7 +15,7 @@
         :selected='days.isAllSelected' 
         class='all'>
         </checkboxes> 
-        
+
         <checkboxes 
         v-for='(item, index) in days.array' 
         :item='item.time' 
@@ -20,9 +23,10 @@
         :index='index' 
         @valueChanged='checked(days, $event)'>
         </checkboxes>
-    
+    </div>
 
-        <hr> اختر الاوقات التي ترغب القراءة فيها:
+    <div class='co'>
+        اختر الاوقات التي ترغب القراءة فيها:
         <checkboxes 
         item="جميع الأوقات" 
         index='0' 
@@ -38,19 +42,21 @@
         :index='index' 
         @valueChanged='checked(periods, $event)'>
         </checkboxes>
-           
+    </div>       
         <button @click='save()' class='btn'>حفظ</button>
     
     </div>
+  </div>  
 </template>
 
 <script>
+import moment from 'moment'
 import * as check from '../js/check.js'
-import * as time from '../js/times.js'
+import { days, periods } from '../js/model.js'
 import userInputHandler from '../js/userInputHandler.js'
 
-const cdays= time.days,
-      cperiods = time.periods
+const cdays= days,
+      cperiods = periods
 
 export default {
     beforeCreate() {
@@ -108,7 +114,7 @@ div {
 
 .co {
     width: 265px;
-    margin: 50px auto;
+    margin: 10px auto;
     background-color: #f3e8d6;
     ;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);

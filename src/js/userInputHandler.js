@@ -1,5 +1,6 @@
-import getPlan from './test.js'
-import sur from './sur.js'
+import moment from 'moment'
+import getPlan from './plan.js'
+import { sur } from './model.js'
 
 const surs = sur
 
@@ -40,7 +41,7 @@ const totalDays = (uds, ud) => {
     },
     peroidshandler = (ups, uds, day, plan) => {
         return ups.map(peroid => {
-            return { start: start(uds, day, plan), end: end(uds, day, plan) }
+            return {name: peroid, start: start(uds, day, plan), end: end(uds, day, plan) }
         })
     },
     fullPlan = (uds, ups, ud) => {
@@ -54,7 +55,7 @@ const totalDays = (uds, ud) => {
                 day: currentDay(uds, i),
                 week: currentWeek(uds, i),
                 peroids: peroidshandler(upsl, uds, i, setPlan),
-                isDone: false,
+                done: false,
                 date: date(i),
             })
         }

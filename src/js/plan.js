@@ -3,10 +3,10 @@ function getNumberOfAyats(suras) {
 }
 
 function getNumberOfAyatsforEveryPeroid(ayats, numberOfPeroids) {
-    return Math.ceil(ayats / numberOfPeroids);
+    return ayats / numberOfPeroids
 }
 function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, sur, start) {
-    const suras = sur
+    const suras = sur.map( obj => Object.assign({}, obj));
     const peroid = {};
     peroid.start = start;
     const surasToRead = [];
@@ -31,21 +31,21 @@ function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, sur, start) {
     if (surasToRead.length === 0) {
         peroid.end = {
             name: sura.name,
-            ayat: peroid.start.ayat + numberOfAyatsToRead - 1
+            ayat: Math.ceil(peroid.start.ayat + numberOfAyatsToRead - 1)
         }
         sura.numberOfAyat = sura.numberOfAyat - numberOfAyatsToRead;
 
     } else {
         peroid.end = {
             name: sura.name,
-            ayat: numberOfAyatsToRead - getNumberOfAyats(surasToRead)
+            ayat: Math.ceil(numberOfAyatsToRead - getNumberOfAyats(surasToRead))
         }
-        sura.numberOfAyat = sura.numberOfAyat - peroid.end.ayat;
+        sura.numberOfAyat = sura.numberOfAyat - (numberOfAyatsToRead - getNumberOfAyats(surasToRead));
     }
 
     if (sura.numberOfAyat > 0) {
         suras.push(sura);
-        nextStart = { name: sura.name, ayat: peroid.end.ayat + 1 }
+        nextStart = { name: sura.name, ayat: Math.ceil(peroid.end.ayat + 1) }
     } else {
         if (suras.length === 0) {
             return peroid;
@@ -57,6 +57,7 @@ function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, sur, start) {
 
     return [].concat(peroid, getAmountOfreadingForeachPeroid(numberOfAyatsToRead, suras, nextStart))
 }
+
 
 function numberOfReadPeroidsToFinish(weeks, days, peroids) {
     return weeks * days * peroids;
