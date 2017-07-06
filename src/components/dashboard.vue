@@ -47,7 +47,7 @@ export default {
     return {
       right: JSON.parse(localStorage.plan),
       left: [],
-      today: moment().add(27, 'days').format('L'),
+      today: moment().format('L'),
       message: true
     }
   },
