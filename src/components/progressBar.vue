@@ -2,7 +2,7 @@
     <div class='con'>
         <svg class="progress" width="120" viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="54" fill="none" stroke="floralwhite" stroke-width="5" />
-            <circle class="progress__value" cx="60" cy="60" r="54" fill="none" stroke="goldenrod" stroke-width="5" :stroke-dashoffset='prgress' />
+            <circle class="progress__value" cx="60" cy="60" r="54" fill="none" stroke="goldenrod" stroke-width="5" :stroke-dashoffset='CalucPrgress' />
         </svg>
         <div class="progressbar-text" style="position: absolute; left: 50%; top: 50%; padding: 0px; margin: 0px; transform: translate(-50%, -50%); color: goldenrod; font-size: 2em;">{{textpro}}</div>
     </div>
@@ -13,18 +13,18 @@
 progress mathod   C * (1 - 0.6) ≈ 135.717  for 60% progress 
 */
 export default {
-    props: ['numgh'],
+    props: ['progress'],
     data() {
         return {
             C: 339.292
         }
     },
     computed: {
-        prgress() {
-            return this.C * (1 - this.numgh)
+        CalucPrgress() {
+            return this.C * (1 - this.progress)
         },
         textpro() {
-            return Math.round(this.numgh * 100) + '%'
+            return Math.round(this.progress * 100) + '%'
         }
     }
 }

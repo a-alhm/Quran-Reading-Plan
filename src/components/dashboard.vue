@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class='main'>
-      <progressBar :numgh='num'></progressBar>
+      <progressBar :progress='planProgress'></progressBar>
       <button @click='moveRight' class='btn'>&lt;</button>
       <button @click='moveLeft' class='btn'>&gt;</button>
       <div class="con">
@@ -32,6 +32,8 @@
  
 <script>
 import moment from 'moment'
+import * as dashboard from '../js/dashboard.js' 
+
 
 export default {
   created() {
@@ -45,48 +47,24 @@ export default {
     return {
       right: JSON.parse(localStorage.plan),
       left: [],
-      today: moment().format('L'),
+      today: moment().add(27, 'days').format('L'),
       message: true
     }
   },
   computed: {
     delayDays() {
-      let aa = this.left.concat(this.right)
-      return aa.reduce((initial, ele) => {
-        if (ele.done === false && moment(this.today).isAfter(ele.date) && ele.day.selected) {
-          initial++
-        }
-        return initial
-      }, 0)
+      return dashboard.daysDoneBeforeToday(this.left, this.right, this.today)
     },
-    num() {
-      let asa = this.left.concat(this.right),
-        asal = asa.reduce((initial, ele) => {
-          if (ele.day.selected) {
-            initial++
-          }
-          return initial
-        }, 0)
-      asa = asa.reduce((inital, num) => {
-        if (num.done) {
-          inital++
-        }
-        return inital
-      }, 0)
-      return asa / asal
+    planProgress() {
+      return dashboard.progress(this.left, this.right)
     }
   },
   methods: {
     moveRight() {
-      if (this.left.length >= 1)
-        this.right.unshift(this.left[this.left.length - 1])
-      this.left.pop()
+     dashboard.moveRight(this.right, this.left)
     },
     moveLeft() {
-      if (this.right.length > 1) {
-        this.left.push(this.right[0])
-        this.right.shift()
-      }
+      dashboard.moveLeft(this.right, this.left)
     },
     checkedDay(data) {
       this.right[0].done = data.checked;
