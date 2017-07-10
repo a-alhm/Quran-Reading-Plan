@@ -5,8 +5,7 @@ function getNumberOfAyats(suras) {
 function getNumberOfAyatsforEveryPeroid(ayats, numberOfPeroids) {
     return ayats / numberOfPeroids
 }
-function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, sur, start) {
-    const suras = sur.map( obj => Object.assign({}, obj));
+function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, suras, start) {
     const peroid = {};
     peroid.start = start;
     const surasToRead = [];
@@ -48,7 +47,7 @@ function getAmountOfreadingForeachPeroid(numberOfAyatsToRead, sur, start) {
         nextStart = { name: sura.name, ayat: Math.ceil(peroid.end.ayat + 1) }
     } else {
         if (suras.length === 0) {
-            return peroid;
+            return [peroid];
         }
         sura = suras.pop();
         nextStart = { name: sura.name, ayat: 1 };
@@ -63,10 +62,12 @@ function numberOfReadPeroidsToFinish(weeks, days, peroids) {
     return weeks * days * peroids;
 }
 export default function getplan(weeks, days, peroids, suras, start = { name: 'الفاتحة', ayat: 1 }) {
-    const ayats = getNumberOfAyats(suras);
+    let surasModel = suras.map( obj => Object.assign({}, obj))
+        surasModel.reverse()
+    const ayats = getNumberOfAyats(surasModel);
     const numberOfPeroids = numberOfReadPeroidsToFinish(weeks, days, peroids);
     const numberOfAyatsToRead = getNumberOfAyatsforEveryPeroid(ayats, numberOfPeroids);
-    const plan = getAmountOfreadingForeachPeroid(numberOfAyatsToRead, suras, start);
+    const plan = getAmountOfreadingForeachPeroid(numberOfAyatsToRead, surasModel, start);
     return plan;
 }
 

@@ -2,8 +2,6 @@ import moment from 'moment'
 import getPlan from './plan.js'
 import { sur } from './model.js'
 
-const surs = sur
-
 const totalDays = (uds, ud) => {
     return uds.length * ud
     },
@@ -49,7 +47,7 @@ const totalDays = (uds, ud) => {
             days = totalDays(uds, ud),
             udsl = userSelections(uds),
             upsl = userSelections(ups);
-        let setPlan = getPlan(udsl.length, upsl.length, ud, surs.reverse())
+        let setPlan = getPlan(ud, udsl.length, upsl.length, sur)
         for (let i = 0; i < days; i++) {
             plan.push({
                 day: currentDay(uds, i),
