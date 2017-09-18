@@ -16,3 +16,5 @@ new Vue({
   router,
   render: h => h(App)
 })
+
+navigator.serviceWorker.register('./sw.js')
