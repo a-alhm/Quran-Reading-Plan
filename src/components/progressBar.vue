@@ -42,5 +42,6 @@ svg {
 
 .progress__value {
     stroke-dasharray: 339.292 339.292;
+    transition-duration: 1s;
 }
 </style>

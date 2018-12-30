@@ -155,7 +155,8 @@ h1 {
 
 .yn {
   margin: 20px;
-  display: inline-block
+  display: inline-block;
+  padding: 10px;
 }
 
 .msg {
