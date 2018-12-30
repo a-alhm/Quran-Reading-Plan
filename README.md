@@ -1,6 +1,7 @@
-# quran
+# About this project
 
-> A Vue.js project
+Quran Reading Plan is PWA (Progressive Web App) which can help you plan for your reading and get the most out of your time, just like any other plan, it can help you maximize the value, and satisfaction you get from your reading
+
 
 ## Build Setup
 
