@@ -17,3 +17,12 @@ npm run build
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Contributions
+You're more than welcome to contribute. There are several things you can do:
+
+* Report bugs.
+* Submit a pull request to the issues.
+* Review pull requests.
+* Suggest new ideas.
+* Suggest improvements to the code.
